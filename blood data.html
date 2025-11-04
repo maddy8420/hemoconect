@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Stock Availability | HemoConnect</title>
+  <style>
+    /* ===== Reset & Font ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start; /* Align to top */
+      background: #fde9e9; /* soft pink background */
+      padding: 40px 20px; /* Padding for small screens */
+    }
+
+    /* Renamed from .register-container */
+    .stock-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 800px; /* Wider for table */
+    }
+
+    .stock-container h2 {
+      font-size: 28px;
+      color: #a0002e; /* main blood-red */
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    /* ===== Filter Bar ===== */
+    .filter-bar {
+      margin-bottom: 25px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .filter-bar label {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .filter-bar select {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      flex-grow: 1; /* Takes remaining space */
+    }
+    
+    .filter-bar select:focus {
+       border-color: #a0002e;
+       outline: none;
+    }
+
+    /* ===== Stock Table ===== */
+    .stock-table-wrapper {
+      width: 100%;
+      overflow-x: auto; /* For responsiveness */
+    }
+    
+    table.stock-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    table.stock-table th,
+    table.stock-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    table.stock-table th {
+      background-color: #a0002e;
+      color: white;
+      font-weight: 600;
+    }
+    
+    /* Make table headers rounded */
+    table.stock-table th:first-child {
+      border-top-left-radius: 8px;
+    }
+    table.stock-table th:last-child {
+      border-top-right-radius: 8px;
+    }
+
+    table.stock-table tbody tr {
+      transition: background-color 0.2s ease;
+    }
+
+    table.stock-table tbody tr:hover {
+      background-color: #f9f9f9;
+    }
+    
+    /* Style for quantity */
+    table.stock-table td:last-child {
+      font-weight: 700;
+      color: #333;
+    }
+    
+    /* Style for blood type */
+    .blood-type {
+      font-weight: 700;
+      color: #a0002e;
+    }
+    
+    /* No results message */
+    .no-results {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+      display: none; /* Hidden by default */
+    }
+
+  </style>
+</head>
+<body>
+  <div class="stock-container">
+    <h2>Blood Stock Availability</h2>
+    <p class="subtitle">Real-time stock from hospitals and blood banks.</p>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <label for="bloodTypeFilter">Filter by Blood Type:</label>
+      <select id="bloodTypeFilter">
+        <option value="all">Show All</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+      </select>
+    </div>
+
+    <!-- Stock Table -->
+    <div class="stock-table-wrapper">
+      <table class="stock-table" id="stockTable">
+        <thead>
+          <tr>
+            <th>Bank/Hospital Name</th>
+            <th>Blood Type</th>
+            <th>Quantity (Units)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dummy Data -->
+          <tr>
+            <td>City Central Blood Bank</td>
+            <td class="blood-type">A+</td>
+            <td>120</td>
+          </tr>
+          <tr>
+            <td>Unity General Hospital</td>
+            <td class="blood-type">O-</td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td>Red Cross Society</td>
+            <td class="blood-type">B+</td>
+            <td>75</td>
+          </tr>
+          <tr>
+            <td>City Central Blood Bank</td>
+            <td class="blood-type">AB+</td>
+            <td>30</td>
+          </tr>
+          <tr>
+            <td>Hope Hospital</td>
+            <td class="blood-type">A+</td>
+            <td>45</td>
+          </tr>
+          <tr>
+            <td>Red Cross Society</td>
+            <td class="blood-type">O-</td>
+            <td>22</td>
+          </tr>
+           <tr>
+            <td>Unity General Hospital</td>
+            <td class="blood-type">B-</td>
+            <td>8</td>
+          </tr>
+           <tr>
+            <td>City Central Blood Bank</td>
+            <td class="blood-type">O+</td>
+            <td>90</td>
+          </tr>
+          <tr>
+            <td>Hope Hospital</td>
+            <td class="blood-type">AB-</td>
+            <td>5</td>
+          </tr>
+          <!-- End Dummy Data -->
+        </tbody>
+      </table>
+      
+      <p class="no-results" id="noResultsMessage">No stock found for the selected blood type.</p>
+    </div>
+    
+  </div>
+  
+  <script>
+    // ===== NEW: Script for Filtering Table =====
+    const filterSelect = document.getElementById('bloodTypeFilter');
+    const stockTable = document.getElementById('stockTable');
+    const tableBody = stockTable.getElementsByTagName('tbody')[0];
+    const noResultsMessage = document.getElementById('noResultsMessage');
+
+    filterSelect.addEventListener('change', function() {
+      const selectedType = filterSelect.value;
+      const rows = tableBody.getElementsByTagName('tr');
+      let visibleRowCount = 0;
+
+      // Loop through all table rows
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const bloodTypeCell = row.getElementsByTagName('td')[1]; // Get the 2nd cell (Blood Type)
+        
+        if (bloodTypeCell) {
+          const bloodType = bloodTypeCell.textContent.trim();
+          
+          // If 'Show All' is selected or the blood type matches, show the row
+          if (selectedType === 'all' || bloodType === selectedType) {
+            row.style.display = ''; // Show row
+            visibleRowCount++;
+          } else {
+            row.style.display = 'none'; // Hide row
+          }
+        }
+      }
+      
+      // Show or hide the 'No results' message
+      if (visibleRowCount === 0) {
+        noResultsMessage.style.display = 'block';
+      } else {
+        noResultsMessage.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

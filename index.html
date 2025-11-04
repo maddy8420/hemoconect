@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   HemoConnect
+  </title>
+  <style>
+/* ============================================
+  🌹 GLOBAL STYLES
+============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* NEW: Smooth scroll for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #fff;
+  color: #333;
+  /* NEW: Smooth fade-in animation for page load */
+  animation: bodyFadeIn 1s ease-in-out;
+}
+
+/* NEW: Keyframe for page load */
+@keyframes bodyFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ============================================
+  🌹 HEADER
+============================================ */
+header {
+  background: #a0002e;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+}
+
+header img {
+  height: 50px;
+  width: auto;
+  background: #fff;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+header .title {
+  flex: 1;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+header .auth-links a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 8px;
+  transition: color 0.3s ease;
+}
+
+header .auth-links a:hover {
+  color: #ffd6d6;
+}
+
+/* ============================================
+  🌹 DROPDOWN MENU (LOGIN)
+============================================ */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  color: inherit;
+}
+
+/* Dropdown button */
+.dropbtn {
+  color: #fff;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 5px;
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.dropbtn:hover {
+  color: #ffd6d6;
+  transform: scale(1.03);
+}
+
+/* Dropdown content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: #ffffff;
+  border-radius: 8px;
+  min-width: 180px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  overflow: hidden;
+  z-index: 1000;
+  color: initial;
+}
+
+/* Show dropdown */
+.dropdown-content.show {
+  display: block;
+  animation: fadeInDropdown 180ms ease;
+}
+
+/* Dropdown links */
+.auth-links .dropdown-content a,
+.dropdown-content a {
+  color: #a0002e;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background-color 0.18s ease, padding-left 0.18s ease;
+}
+
+/* Hover effect */
+.auth-links .dropdown-content a:hover,
+.dropdown-content a:hover {
+  background-color: lavender; /* #E6E6FA */
+  color: #a0002e;
+  padding-left: 20px;
+}
+
+/* Fade animation */
+@keyframes fadeInDropdown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+  🌹 NAVIGATION BAR
+============================================ */
+nav {
+  background: #f0f0f0;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #a0002e;
+}
+
+/* ============================================
+  🌹 HERO SECTION
+============================================ */
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+            url('https://images.pexels.com/photos/12193090/pexels-photo-12193090.jpeg') center/cover no-repeat;
+  color: #fff;
+  text-align: center;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  animation: fadeInDown 1s ease;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+  animation: fadeInUp 1.2s ease;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap; /* Added for better mobile wrapping */
+}
+
+.btn {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: #a0002e;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #800022;
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background: #fff;
+  color: #a0002e;
+  border: 2px solid #a0002e;
+}
+
+.btn-secondary:hover {
+  background: #a0002e;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+  🌹 ABOUT SECTION
+============================================ */
+.about-section {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #fff5f5, #fde9e9);
+}
+
+.about-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto 50px;
+}
+
+.about-text {
+  flex: 1;
+  min-width: 300px;
+}
+
+.about-text h2 {
+  font-size: 2.5rem;
+  color: #a0002e;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.about-text .highlight {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.about-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.about-image img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s;
+}
+
+.about-image img:hover {
+  transform: scale(1.03);
+}
+
+/* Values below About */
+.about-values-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-values {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.about-values div {
+  flex: 1;
+  min-width: 250px;
+  background: #fff;
+  border-left: 4px solid #a0002e;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.about-values div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.about-values h3 {
+  color: #a0002e;
+  margin-bottom: 8px;
+}
+
+.about-values p {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+/* ============================================
+  🌹 FEATURES SECTION
+============================================ */
+.features-section {
+  padding: 60px 20px;
+  background: #fff;
+  text-align: center;
+}
+
+.features-section h2 {
+  font-size: 2rem;
+  color: #a0002e;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.features-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.feature-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 15px;
+  flex: 1 1 160px;
+  max-width: 180px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  text-align: center;
+  cursor: pointer;
+}
+
+.feature-icon {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  color: #a0002e;
+}
+
+.feature-card h3 {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.feature-card p {
+  font-size: 0.85rem;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  line-height: 1.4;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  background-color: #a0002e;
+  color: #fff;
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.feature-card:hover h3,
+.feature-card:hover p {
+  color: #fff;
+}
+
+.feature-card:hover p {
+  opacity: 1;
+  max-height: 100px;
+  margin-top: 8px;
+}
+
+/* ============================================
+  🌹 FOOTER
+============================================ */
+footer {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+</style>
+
+
+ </head>
+ <body>
+  <!-- Header -->
+  <header>
+   <!-- MODIFIED: Replaced local src with placeholder -->
+   <img alt="Logo" src="Blood.png"/>
+   <div class="title">
+    HemoConnect
+   </div>
+   <div class="auth-links">
+    
+    <div class="dropdown">
+     <!-- MODIFIED: Added onclick event -->
+     <a href="javascript:void(0)" class="dropbtn" onclick="toggleDropdown()">Login</a>
+     <!-- MODIFIED: Added id -->
+     <div class="dropdown-content" id="myDropdown">
+      
+      <a href="donor-reg.html">Donor</a>
+      <a href="hospital-reg.html">Hospital</a>
+      <a href="bloodbank-reg.html">Blood Bank</a>
+      <a href="delivery-reg.html">Delivery Partner</a>
+     </div>
+    </div>
+    
+    |
+    
+    <a href="global-reg.html">
+     Register
+    </a>
+   </div>
+  </header>
+  <!-- Navigation -->
+  <nav>
+   <a href="#">
+    Home
+   </a>
+   <a href="#about">
+    About
+   </a>
+   <a href="#features">
+    Features
+   </a>
+   <a href="global-reg.html">
+    Register
+   </a>
+   <a href="#contact">
+    Contact
+   </a>
+  </nav>
+  <!-- Hero Section -->
+  <div class="hero">
+   <h1>
+    Saving Lives Through Smart Blood Delivery
+   </h1>
+   <p>
+    Real-time availability. Fast delivery. Emergency donor alerts.
+   </p>
+   <div class="hero-buttons">
+    <!-- ===== BUTTON STYLE UPDATED ===== -->
+    <button class="btn btn-secondary" onclick="requestBlood()">
+     Request Blood
+    </button>
+    <!-- ===== BUTTON STYLE UPDATED ===== -->
+    <button class="btn btn-secondary" onclick="viewBloodData()">
+     Blood Data
+    </button>
+    <!-- ============================ -->
+    <button class="btn btn-secondary" onclick="registerDonor()">
+     Register as Donor
+    </button>
+   </div>
+  </div>
+  <!-- About -->
+  <section class="about-section" id="about">
+   <!-- About text + image -->
+   <div class="about-container">
+    <div class="about-text">
+     <h2>
+      About HemoConnect
+     </h2>
+     <p class="highlight">
+      Connecting Lives, Saving Moments
+     </p>
+     <p>
+      HemoConnect is a platform designed to empower healthcare by connecting hospitals, blood banks, and donors efficiently. We focus on reliability, transparency, and trust in critical moments.
+     </p>
+    </div>
+    <div class="about-image">
+     <!-- MODIFIED: Replaced local src with placeholder -->
+     <img alt="Life-Saving Connection" src="blood3.jpg"/>
+    </div>
+   </div>
+   <!-- Value Boxes below About -->
+   <div class="about-values-container">
+    <div class="about-values">
+     <div>
+      <h3>
+       💖 Compassion
+      </h3>
+      <p>
+       Prioritizing lives and ensuring emergency support is seamless and accessible.
+      </p>
+     </div>
+     <div>
+      <h3>
+       🔒 Trust
+      </h3>
+      <p>
+       Verified partners and secure processes guarantee reliability in critical times.
+      </p>
+     </div>
+     <div>
+      <h3>
+       🌐 Accessibility
+      </h3>
+      <p>
+       Bridging communities and hospitals for timely assistance when every minute counts.
+      </p> <!-- TYPO FIX: Was </t> -->
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Features -->
+  <section class="features-section" id="features">
+   <h2>
+    Core Features
+   </h2>
+   <div class="features-grid">
+    <div class="feature-card">
+     <div class="feature-icon">
+      📊
+     </div>
+     <h3>
+      Live Blood Stock
+     </h3>
+     <p>
+      Track real-time blood availability in connected hospitals and blood banks.
+     </p>
+    </div>
+    <div class="feature-card">
+     <div class="feature-icon">
+      📱
+     </div>
+     <h3>
+      Request System
+     </h3>
+     <p>
+      Easily request blood through a simple, secure platform anytime.
+     </p>
+    </div>
+    <div class="feature-card">
+     <div class="feature-icon">
+      🚴
+     </div>
+     <h3>
+      Delivery Service
+     </h3>
+     <p>
+      Authorized delivery partners ensure swift and safe blood transport.
+     </p>
+    </div>
+    <div class="feature-card">
+     <div class="feature-icon">
+      📢
+     </div>
+     <h3>
+      Donor Alerts
+     </h3>
+     <p>
+      Instantly notify donors when their blood type is urgently needed.
+     </p>
+    </div>
+    <div class="feature-card">
+     <div class="feature-icon">
+      🔔
+     </div>
+     <h3>
+      Notifications
+     </h3>
+     <p>
+      Receive timely alerts for stock updates, requests, and confirmations.
+     </ax>
+    </div>
+   </div>
+  </section>
+  <!-- Footer -->
+  <footer>
+   <p>
+    © 2025 HemoConnect | Project for Healthcare Innovation
+   </p>
+  </footer>
+  
+  <!-- SCRIPT -->
+  <script>
+   function registerDonor() {
+    // Redirect to registration page
+    window.location.href = "donor-reg.html"; 
+   }
+   function requestBlood() {
+    // Redirect to request page
+    window.location.href = "request-blood.html"; 
+   }
+   
+   // ===== NEW FUNCTION ADDED =====
+   function viewBloodData() {
+    // Redirect to blood data page
+    window.location.href = "blood-data.html";
+   }
+   // ==============================
+
+   /* NEW: Script for click-dropdown */
+   function toggleDropdown() {
+     document.getElementById("myDropdown").classList.toggle("show");
+   }
+
+   // Close the dropdown if the user clicks outside of it
+   window.onclick = function(event) {
+     if (!event.target.matches('.dropbtn')) {
+       var dropdowns = document.getElementsByClassName("dropdown-content");
+       for (var i = 0; i < dropdowns.length; i++) {
+         var openDropdown = dropdowns[i];
+         if (openDropdown.classList.contains('show')) {
+           openDropdown.classList.remove('show');
+         }
+       }
+     }
+   }
+  </script>
+ </body>
+</html>
+

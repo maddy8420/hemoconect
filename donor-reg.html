@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donor Registration - BloodLink</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f8;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .quote {
+      background: crimson;
+      color: white;
+      padding: 30px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .form-container {
+      background: white;
+      width: 350px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: left; /* Aligned labels to the left */
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: Arial, sans-serif; /* Added font */
+      font-size: 14px; /* Added font size */
+    }
+
+    .btn {
+      margin-top: 20px;
+      background: crimson;
+      color: white;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: darkred;
+    }
+    
+    /* Message styling */
+    .msg {
+      font-size: 14px;
+      margin-top: 15px;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: crimson;
+    }
+
+    /* ===== CUSTOM DROPDOWN CSS (Adapted) ===== */
+    
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      width: 100%; /* Make dropdown container fill width */
+    }
+
+    /* Dropdown button - Adapted to match form fields */
+    .dropbtn {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      transition: border-color 0.3s;
+      background-color: #fff;
+      color: #333; /* Default text color */
+      text-align: left;
+      cursor: pointer;
+    }
+    
+    .dropbtn:focus {
+      border-color: crimson;
+      outline: none;
+    }
+
+    /* Dropdown content */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 105%; /* Position slightly below the button */
+      left: 0;
+      right: 0;
+      background-color: #ffffff;
+      border-radius: 8px;
+      min-width: 100%; /* Match button width */
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    /* Show dropdown */
+    .dropdown-content.show {
+      display: block;
+      animation: fadeInDropdown 180ms ease;
+    }
+
+    /* Dropdown links */
+    .dropdown-content a {
+      color: #a0002e; /* Red shade */
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: background-color 0.18s ease, padding-left 0.18s ease;
+    }
+
+    /* Hover effect */
+    .dropdown-content a:hover {
+      background-color: lavender; /* #E6E6FA */
+      color: #a0002e;
+      padding-left: 20px;
+    }
+
+    /* Fade animation */
+    @keyframes fadeInDropdown {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="quote">
+    <h2>"Be the reason for someone’s heartbeat."</h2>
+  </div>
+
+  <div class="form-container">
+    <h2>Donor Registration</h2>
+    <form id="donorForm">
+      <label for="donorName">Name</label>
+      <input type="text" id="donorName" required>
+
+      <!-- ===== MODIFIED BLOOD TYPE DROPDOWN ===== -->
+      <label for="donorBloodButton">Blood Type</label>
+      <div class="dropdown">
+        <!-- This button shows the selected value -->
+        <button type="button" class="dropbtn" id="donorBloodButton">--Select Blood Type--</button>
+        
+        <!-- This hidden input holds the value for the form -->
+        <input type="hidden" id="donorBlood" name="donorBlood" value="" required>
+        
+        <div class="dropdown-content" id="donorBloodDropdown">
+          <a href="#" data-value="A+">A+</a>
+          <a href="#" data-value="A-">A-</a>
+          <a href="#" data-value="B+">B+</a>
+          <a href="#" data-value="B-">B-</a>
+          <a href="#" data-value="O+">O+</a>
+          <a href="#" data-value="O-">O-</a>
+          <a href="#" data-value="AB+">AB+</a>
+          <a href="#" data-value="AB-">AB-</a>
+        </div>
+      </div>
+
+      <label for="phone">Phone</label>
+      <input type="tel" id="phone" placeholder="123-456-7890" required>
+      <label for="email">E-mail ID</label>
+      <input type="email" id="email" placeholder="example@example.com" required>
+
+
+      <button type="submit" class="btn">Register</button>
+    </form>
+    <p id="donorMsg" class="msg"></p>
+  </div>
+  
+  <script>
+    // === SCRIPT FOR CUSTOM DROPDOWN ===
+    
+    const bloodTypeButton = document.getElementById('donorBloodButton');
+    const bloodTypeDropdown = document.getElementById('donorBloodDropdown');
+    const bloodTypeHiddenInput = document.getElementById('donorBlood');
+
+    // Toggle dropdown visibility
+    bloodTypeButton.addEventListener('click', function(event) {
+      event.stopPropagation(); // Prevent window.onclick from firing
+      bloodTypeDropdown.classList.toggle('show');
+    });
+
+    // Handle option selection
+    bloodTypeDropdown.addEventListener('click', function(event) {
+      event.preventDefault();
+      // Check if the clicked target is an <a> tag with a 'data-value'
+      if (event.target.matches('a[data-value]')) {
+        const selectedValue = event.target.getAttribute('data-value');
+        const selectedText = event.target.textContent;
+        
+        // Update the button text
+        bloodTypeButton.textContent = selectedText;
+        
+        // Update the hidden input's value
+        bloodTypeHiddenInput.value = selectedValue;
+        
+        // Hide the dropdown
+        bloodTypeDropdown.classList.remove('show');
+      }
+    });
+
+    // Close the dropdown if clicking outside
+    window.addEventListener('click', function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        if (bloodTypeDropdown.classList.contains('show')) {
+          bloodTypeDropdown.classList.remove('show');
+        }
+      }
+    });
+
+
+    // === FORM SUBMISSION SCRIPT ===
+
+    document.getElementById('donorForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Stop the form from submitting normally
+
+      const donorMsg = document.getElementById('donorMsg');
+      
+      // Clear previous messages
+      donorMsg.textContent = '';
+      donorMsg.className = 'msg';
+
+      // --- Custom Dropdown Validation ---
+      if (bloodTypeHiddenInput.value === "") {
+        donorMsg.textContent = 'Please select a blood type.';
+        donorMsg.classList.add('error');
+        return;
+      }
+
+      // --- All Validations Passed ---
+      
+      // Show success message
+      donorMsg.textContent = 'Registration successful!';
+      donorMsg.classList.add('success');
+
+      // Reset the form after a short delay
+      setTimeout(() => {
+        document.getElementById('donorForm').reset();
+        // Reset custom dropdown button text
+        bloodTypeButton.textContent = '--Select Blood Type--';
+        donorMsg.textContent = '';
+        donorMsg.className = 'msg';
+      }, 3000);
+
+    });
+  </script>
+</body>
+</html>
